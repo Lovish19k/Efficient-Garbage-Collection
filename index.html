@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garbage Collection Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="theme-dark">
+    <div id="app-container">
+        <!-- Sidebar Controls -->
+        <aside id="sidebar">
+            <header>
+                <h1>GC Sim</h1>
+                <p>Efficient Garbage Collection Simulator</p>
+            </header>
+
+            <div class="control-group">
+                <h3>Simulation Control</h3>
+                <div class="button-row">
+                    <button id="btn-start" class="primary">Start</button>
+                    <button id="btn-pause" class="secondary" disabled>Pause</button>
+                    <button id="btn-reset" class="danger">Reset</button>
+                    <button id="btn-step" class="secondary" disabled>Step</button>
+                </div>
+                <label>Speed: <span id="speed-val">1x</span></label>
+                <input type="range" id="sim-speed" min="1" max="10" value="1">
+            </div>
+
+            <div class="control-group">
+                <h3>Heap Config (Reset Required)</h3>
+                <label>Total Size (Blocks):</label>
+                <input type="number" id="config-heap-size" value="256" min="64" max="1024">
+
+                <label>GC Algorithm:</label>
+                <select id="config-gc-algo">
+                    <option value="MarkSweep">Mark & Sweep</option>
+                    <option value="MarkCompact">Mark & Compact</option>
+                    <option value="ReferenceCounting">Reference Counting</option>
+                    <option value="Generational">Generational</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <h3>Mutator (User Program)</h3>
+                <button id="btn-allocate" class="action">Allocate Object</button>
+                <button id="btn-gc" class="warning">Force GC</button>
+                <div class="status-panel">
+                    <p>Objects: <span id="stat-objects">0</span></p>
+                    <p>Occupied: <span id="stat-occupied">0%</span></p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Legend</h3>
+                <div class="legend-item"><span class="color-box free"></span> Free</div>
+                <div class="legend-item"><span class="color-box allocated"></span> Live Object</div>
+                <div class="legend-item"><span class="color-box garbage"></span> Garbage</div>
+                <div class="legend-item"><span class="color-box marked"></span> Marked</div>
+                <div class="legend-item"><span class="color-box old-gen"></span> Old Gen</div>
+            </div>
+
+            <div class="control-group footer-controls">
+                <button id="btn-theme-toggle">Time Mode</button>
+                <button id="btn-docs">Docs</button>
+            </div>
+        </aside>
+
+        <!-- Main Visualization Area -->
+        <main id="main-view">
+            <div id="visualization-header">
+                <h2>Heap Memory Visualization</h2>
+                <div id="heap-stats">
+                    <!-- Dynamic stats header -->
+                </div>
+            </div>
+
+            <div id="canvas-container">
+                <canvas id="heap-canvas"></canvas>
+            </div>
+
+            <div id="metrics-panel">
+                <h3>Metrics Dashboard</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>GC Cycles</h4>
+                        <span id="metric-gc-cycles">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Last Pause (ms)</h4>
+                        <span id="metric-pause-time">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Reclaimed (Blocks)</h4>
+                        <span id="metric-reclaimed">0</span>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Fragmentation</h4>
+                        <span id="metric-frag">0%</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modal-docs" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>GC Algorithms Documentation</h2>
+            <div id="docs-content">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <div id="tooltip" class="hidden"></div>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
