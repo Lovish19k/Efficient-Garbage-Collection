@@ -89,3 +89,4 @@ This project is built using standard web technologies and requires a modern web 
 ## License
 
 [MIT License](LICENSE) (Assuming MIT for this educational project, otherwise specify your own).
+
